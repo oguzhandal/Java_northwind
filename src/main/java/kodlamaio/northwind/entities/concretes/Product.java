@@ -19,8 +19,10 @@ public class Product {
     @Column(name = "product_id")
     private int id;
 
-    @Column(name = "category_id")
-    private int categoryId;
+    // @Column(name = "category_id")
+    // private int categoryId;
+    //Aşağıda @JoinColumn ile ilişkilendirdiğimiz için burada bu bilgiyi tutmaya gerek yok.
+    //Category tablosundaki categoryId yi ilişkilendirerek Product tablosundaki categoryId verilerini tutarız
 
     @Column(name = "product_name")
     private String productName;
@@ -33,4 +35,8 @@ public class Product {
 
     @Column(name = "quantity_per_unit")
     private String quantityPerUnit;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
