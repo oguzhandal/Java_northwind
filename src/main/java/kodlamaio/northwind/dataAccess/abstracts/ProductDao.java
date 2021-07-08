@@ -1,6 +1,7 @@
 package kodlamaio.northwind.dataAccess.abstracts;
 
 import kodlamaio.northwind.entities.concretes.Product;
+import kodlamaio.northwind.entities.dtos.ProductWithCategoryDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,6 +23,10 @@ public interface ProductDao extends JpaRepository<Product, Integer> {
 
     @Query("from Product where productName=:productName and category.categoryId=:categoryId")
     List<Product> getByNameAndCategory(String productName, int categoryId);
-    //Query sorgusu yazarken Tabloyu değil Entities deki product baz alınır.
+
+    //Query yazarken Tabloyu değil Entities deki product baz alınır
+    @Query("select new kodlamaio.northwind.entities.dtos.ProductWithCategoryDto(p.id, p.productName,c.categoryName)" +
+            " from Category c inner join c.products p")
+    List<ProductWithCategoryDto> getProductWithCategoryDetails();
 
 }
